@@ -1,0 +1,96 @@
+/* src/components/MediapipeProcessor.css */
+
+/* Container principal para os controles de treinamento */
+.mediapipe-status {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+/* Área de controle de coleta */
+.collect-controls {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 15px;
+    background-color: #f9f9f9;
+}
+
+.collect-controls h3 {
+    margin-top: 0;
+    color: #3B82F6; /* Cor azul suave */
+    font-size: 1.1em;
+}
+
+/* Estilo para o campo de input (Letra/Gesto) */
+.collect-controls input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* Largura total menos padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+/* Estilo para todos os botões de controle */
+.collect-controls button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.2s, background-color 0.2s;
+    margin: 5px;
+}
+
+/* Estilo para botões desabilitados */
+.collect-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Estilo para o botão de Download (Azul) */
+.collect-controls button:nth-child(4) { /* O segundo botão, que é o download */
+    background-color: #4A90E2; 
+    color: white;
+}
+
+/* Estilo para feedback de amostras */
+.collect-controls p {
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Painel expansível */
+.mediapipe-panel {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .toggle-panel-btn {
+    background-color: #0078ff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .toggle-panel-btn:hover {
+    background-color: #005fcc;
+  }
+  
+  .panel-content {
+    margin-top: 12px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  

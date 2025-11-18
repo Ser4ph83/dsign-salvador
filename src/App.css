@@ -1,0 +1,234 @@
+/* src/App.css */
+body{
+    background-color: #C4B5FD;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+.main-title {
+    color: #4A90E2; /* Azul de Confiança */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espaço entre os cards */
+}
+
+/* --- ESTILOS DO CARD DA ESQUERDA (SURDO -> OUVINTE) --- */
+
+.video-placeholder {
+    height: 300px; /* Altura do vídeo */
+    background-color: #3b82f640; /* Um azul mais claro para indicar a área de vídeo */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4A90E2;
+    font-weight: 500;
+    border: 2px dashed #4A90E2;
+}
+
+.result-area {
+    padding: 10px;
+    background-color: white; 
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    
+    flex-grow: 1; /* Mantém o crescimento */
+    max-height: 200px; /* OU defina uma altura máxima se o flex-grow não for suficiente */
+    overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
+    word-wrap: break-word; /* Quebra palavras longas que não cabem */
+    /* OU use a propriedade mais moderna: */
+    overflow-wrap: break-word;
+}
+
+.result-text {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #4A90E2;
+    font-weight: 600;
+    
+    /* NOVO: Garante que o conteúdo de texto respeite a quebra */
+    white-space: pre-wrap; /* Preserva espaços e quebra linhas */
+}
+
+.action-row {
+    padding: 10px 0;
+    text-align: right; /* Alinha o botão à direita (opcional) */
+}
+
+/* Estilo do botão de limpeza */
+.clear-button {
+    padding: 8px 15px;
+    background-color: #fca5a5; /* Um vermelho/rosa suave */
+    color: #991b1b;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.clear-button:hover:not(:disabled) {
+    background-color: #f87171; /* Vermelho mais forte ao passar o mouse */
+}
+
+.clear-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* src/App.css */
+
+/* Estilos para o botão de controle da câmera */
+.camera-control-row {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.camera-on-button {
+    background-color: #10b981; /* Verde (ligar) */
+    color: white;
+}
+
+.camera-off-button {
+    background-color: #ef4444; /* Vermelho (desligar) */
+    color: white;
+}
+
+/* Base de estilo comum para os botões da câmera */
+.camera-on-button, .camera-off-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.camera-on-button:hover {
+    background-color: #059669;
+}
+
+.camera-off-button:hover {
+    background-color: #dc2626;
+}
+
+/* Estilo para a mensagem quando a câmera está desligada */
+.camera-off-message {
+    min-height: 300px; /* Mantém o mesmo tamanho do placeholder de vídeo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e7ff; /* Azul claro suave */
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.camera-off-message p {
+    color: #4f46e5;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* --- ESTILOS DO CARD DA DIREITA (OUVINTE -> SURDO) --- */
+
+.input-textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #81E6D9; /* Borda turquesa (frescor/acolhimento) */
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.translate-button {
+    background-color: #4A90E2; /* Botão de Ação (Azul) */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: background-color 0.2s;
+}
+
+.translate-button:hover {
+    background-color: #3B82F6; /* Um azul um pouco mais escuro ao passar o mouse */
+}
+
+.App {
+    text-align: center;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f4f6f9;
+    height: 100%;
+    padding: 0;
+  }
+  
+  .app-title {
+    color: #222;
+    margin-bottom: 10px;
+  }
+  
+  .recognized-container {
+     flex: 1;                   /* ocupa todo o espaço restante */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;   /* 🔥 centraliza verticalmente */
+  }
+  
+  .status-msg {
+    margin-top: 15px;
+    color: #666;
+    font-size: 0.9em;
+  }
+
+  .recognized-box {
+    max-height: none;          /* remove limites */
+    background: white;
+    padding: 30px;
+    box-sizing: border-box;    /* garante que padding não cause overflow */
+    overflow: hidden;          /* 🔥 evita rolagem */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 2rem;           /* aumenta o texto se quiser */
+    border-radius: 0;          /* opcional: remove bordas para parecer fullscreen */
+}
+
+.Erase {
+    margin-bottom: 8px;
+}
+
+
+/* --- MEDIA QUERIES (RESPONSIVIDADE) --- */
+
+@media (max-width: 900px) {
+    .cards-container {
+        flex-direction: column; /* Empilha os cards em telas menores */
+        gap: 20px;
+    }
+
+    .main-title {
+        font-size: 2rem;
+    }
+}
+
+.translate-button {
+    width: 300px;
+    height: 50px;
+    margin-top: 20px;
+}

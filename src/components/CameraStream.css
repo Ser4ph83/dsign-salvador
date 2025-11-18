@@ -1,0 +1,28 @@
+/* src/components/CameraStream.css */
+
+.camera-container {
+    height: 100%;
+    width: 100%;
+    /* Mantém o estilo do placeholder para fallback, mas o vídeo o substitui */
+    background-color: #3b82f640; 
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Garante que o vídeo não saia das bordas */
+}
+
+.video-element {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que o vídeo preencha o container sem distorcer */
+    border-radius: 8px;
+    /* Pode ser espelhado (flip horizontal) se o vídeo for de selfie: */
+    /* transform: scaleX(-1); */ 
+}
+
+.camera-error {
+    color: #cc0000;
+    text-align: center;
+    padding: 20px;
+}
