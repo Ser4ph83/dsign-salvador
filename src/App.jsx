@@ -10,6 +10,38 @@ function App() {
   const [isCameraOn, setIsCameraOn] = useState(false);
   const streamRef = useRef(null);
 
+  // ✅ referencia para la janela VLibras
+  const popupRef = useRef(null);
+
+  // ✅ función para abrir la janela y enviar texto
+  const handleTranslate = () => {
+    const largura = 650;
+    const altura = 700;
+    const esquerda = window.screen.width - largura - 20;
+    const topo = (window.screen.height / 2) - (altura / 2);
+
+    if (!popupRef.current || popupRef.current.closed) {
+      popupRef.current = window.open(
+        '/dsing/model/vlibras.html',
+        'JanelaVLibras',
+        `width=${largura},height=${altura},left=${esquerda},top=${topo},resizable=no,scrollbars=no`
+      );
+
+      setTimeout(() => {
+        popupRef.current?.postMessage(
+          { type: 'VLIBRAS_TEXT', text: recognizedText },
+          '*'
+        );
+      }, 800);
+
+    } else {
+      popupRef.current.postMessage(
+        { type: 'VLIBRAS_TEXT', text: recognizedText },
+        '*'
+      );
+    }
+  };
+
   // liga a câmera (cria stream)
   const startCamera = async () => {
     try {
@@ -56,7 +88,6 @@ function App() {
     else startCamera();
   };
 
-  // tenta recarregar o modelo salvo no indexedDB (se existir) — MediapipeProcessor também faz, mas mantemos status aqui
   useEffect(() => {
     setMessage(isCameraOn ? "Câmera ativa. Aguardando MediaPipe..." : "Câmera desligada.");
   }, [isCameraOn]);
@@ -73,7 +104,6 @@ function App() {
         </div>
       </header>
 
-      {/* vídeo oculto (fonte para MediaPipe) */}
       <video
         ref={videoRef}
         width="640"
@@ -84,7 +114,6 @@ function App() {
         style={{ display: "none" }}
       />
 
-      {/* Processador: só inicia quando a câmera estiver ligada */}
       <MediapipeProcessor
         videoStreamRef={videoRef}
         isCameraOn={isCameraOn}
@@ -97,12 +126,12 @@ function App() {
         <div className="recognized-box">{recognizedText || "Aguardando gesto..."}</div>
         <div style={{ marginTop: 8 }}>
           <button className="Erase" 
-            onClick={() => 
-              setRecognizedText("")
-            } 
-            disabled={!recognizedText}>
+            onClick={() => setRecognizedText("")}
+            disabled={!recognizedText}
+          >
             ✖ Limpar texto
           </button>
+
           <button className="Erese"
             onClick={() =>
               setRecognizedText((prev) => prev.slice(0, prev.length - 1))
@@ -112,6 +141,15 @@ function App() {
           >
             ⬅ Apagar letra
           </button>
+
+          {/* ✅ botón que abre la janela VLibras */}
+          <button 
+            style={{ marginLeft: 12 }} 
+            onClick={handleTranslate}
+          >
+            📤 Enviar ao VLibras
+          </button>
+
         </div>
       </main>
     </div>

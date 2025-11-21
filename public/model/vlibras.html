@@ -1,131 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Janela VLibras</title>
-    <style>
-        body {
-        background-color: #0d94e8;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        animation: slideInRight 0.6s ease-out;
-      }
- 
-      h2 {
-        text-align: center;
-        color: #333;
-      }
- 
-      .translation-box {
-        background-color: #ffffff;
-        border: 2px solid #0058f3;
-        border-radius: 12px;
-        padding: 20px;
-        width: 90%;
-        max-width: 500px;
-        margin: 20px auto;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.50);
-        height: 350px;
-       
-      }
- 
-      .translation-box h3 {
-        color: #030303;
-        margin-bottom: 10px;
-      }
- 
-      .translation-box p {
-        text-transform: uppercase; /* 🔠 Muestra todo en mayúsculas */
-        color: #000000;
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-        word-wrap: break-word;
-      }
- 
-   
-      .volver-button:hover {
-        background-color: #4338ca;
-      }
- 
-      #vlibras-container {
-        margin-top: 30px;
-      }
-      @keyframes slideInRight {
-        from {
-          opacity: 0;
-          transform: translateX(100px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-     
-     
-    </style>
-  </head>
-  <body>
-    <h2>🧩 Tradutor VLibras</h2>
- 
-     <div class="translation-box" data-vlibras>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Janela VLibras</title>
+</head>
+
+<body>
+
+  <!-- 🔵 Tela de carga -->
+  <div id="loading-screen">
+
+    <!-- Loader --->
+    <svg class="loader" viewBox="25 25 50 50">
+      <circle r="20" cy="50" cx="50"></circle>
+    </svg>
+
+    <p class="loading-text">Carregando Função...</p>
+  </div>
+
+  <!-- 🔵 Título -->
+  <h2>🧩 Tradutor VLibras</h2>
+
+  <!-- 🔵 Área de tradução -->
+  <div class="orden">
+    <div class="translation-box" data-vlibras>
       <h3>Texto para tradução:</h3>
       <p id="translated-text"></p>
-     
-     
     </div>
- 
- 
-    <div id="vlibras-container">
-      <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-          <div class="vw-plugin-top-wrapper"></div>
-        </div>
+
+    <input 
+      type="text" 
+      placeholder="Digite sua mensagem para tradução..." 
+      id="input-preview"
+    />
+  </div>
+
+  
+
+  <!-- 🔵 VLibras -->
+  <div id="vlibras-container">
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
       </div>
     </div>
- 
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>
-  new window.VLibras.Widget("https://vlibras.gov.br/app");
- 
-  // ✅ Recibe texto desde la app React
-  window.addEventListener("message", (e) => {
-    if (e.data?.type === "VLIBRAS_TEXT") {
-      const p = document.getElementById("translated-text");
-      if (p) {
-        p.textContent = e.data.text.toUpperCase(); // 🔠 todo mayúsculas
-      }
- 
-      // 🔹 Enviar texto al VLibras automáticamente
-      if (window.accessibility && window.accessibility.sendContent) {
-        // Crea un textarea temporal para enviar el contenido
-        const tempArea = document.createElement("textarea");
-        tempArea.id = "textarea-vlibras";
-        tempArea.value = e.data.text;
-        document.body.appendChild(tempArea);
- 
-        window.accessibility.sendContent("textarea-vlibras");
-        console.log("✅ Texto enviado a VLibras:", e.data.text);
-      } else {
-        console.warn("⚠️ O widget VLibras precisa ser ativado primeiro.");
-      }
+  </div>
+  
+
+  <!-- 🔵 Scripts VLibras -->
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+  <script>
+    new window.VLibras.Widget("https://vlibras.gov.br/app");
+    
+    // ▶️ Input → P em tempo real
+    const inputPreview = document.getElementById("input-preview");
+    const translatedText = document.getElementById("translated-text");
+
+    if (inputPreview && translatedText) {
+      inputPreview.addEventListener("input", () => {
+        translatedText.textContent = inputPreview.value;
+      });
     }
-  });
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      const accessButton = document.querySelector("[vw-access-button]");
-      if (accessButton) {
-        accessButton.click(); // 👈 Ativa o VLibras automaticamente
-        console.log("✅ VLibras ativado automaticamente!");
-      }
-    }, 1500); // espera 1.5s para garantir que o widget carregou
-  });
-</script>
- 
-  </body>
+
+    // ▶️ Tela de carga + Ativa o VLibras automaticamente
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+
+        const loading = document.getElementById("loading-screen");
+        loading.classList.add("fade-out");
+
+        setTimeout(() => {
+          loading.style.display = "none";
+        }, 800); 
+
+        const accessButton = document.querySelector("[vw-access-button]");
+        if (accessButton) {
+          accessButton.click();
+          console.log("✅ VLibras ativado automaticamente!");
+        }
+
+      }, 3000); 
+    });
+
+  </script>
+
+</body>
 </html>
- 
